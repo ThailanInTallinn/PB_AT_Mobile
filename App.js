@@ -8,11 +8,12 @@ import HomeIcon from "@mui/icons-material/Home";
 import Entypo from "@expo/vector-icons/Entypo";
 import SearchPage from "./src/components/searchPage/searchPage";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import Details from "./src/components/details/details";
 
-export default function App() {
-  const Stack = createNativeStackNavigator();
-  const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
+function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -23,7 +24,7 @@ export default function App() {
       >
         <Tab.Screen
           name="Home"
-          component={Home}
+          component={InternalApp}
           options={{
             tabBarIcon: () => <Entypo name="home" size={24} color="#f9f9f9" />,
           }}
@@ -40,7 +41,18 @@ export default function App() {
       </Tab.Navigator>
     </NavigationContainer>
   );
+
+  function InternalApp() {
+    return (
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Details" component={Details} />
+      </Stack.Navigator>
+    );
+  }
 }
+
+export default App;
 
 const styles = StyleSheet.create({
   container: {
