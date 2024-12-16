@@ -10,8 +10,8 @@ export default function Card({ srcImg, id, action }) {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    height: "30%",
-    width: 200,
+    height: "95%",
+    width: 220,
     backgroundColor: "white",
     marginLeft: 8,
     marginRight: 8,

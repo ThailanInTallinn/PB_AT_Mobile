@@ -1,70 +1,74 @@
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import Header from "../header/header.jsx";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { MY_ACESS_TOKEN } from "../home/home";
 import axios from "axios";
 
-export default function Details(props) {
+export default function SeriesDetails(props) {
   const navigation = props.navigation;
   const route = props.route;
   const params = route.params;
 
-  const [movieInfo, setMovieInfo] = useState({
-    title: "",
+  const [seriesInfo, setSeriesInfo] = useState({
+    name: "",
     genre: [],
     releaseDate: "",
     overview: "",
     poster_path: "",
   });
-  async function getMovie() {
-    const accessOptions = {
+  async function getSeries() {
+    const options = {
       method: "GET",
-      url: `https://api.themoviedb.org/3/movie/${params.id}`,
+      url: `https://api.themoviedb.org/3/tv/${params.id}?language=en-US`,
       headers: {
         accept: "application/json",
         Authorization: MY_ACESS_TOKEN,
       },
     };
+
     const genresNames = [];
-    await axios.request(accessOptions).then(function (response) {
+    await axios.request(options).then(function (response) {
       const genresList = response.data.genres;
-      const releaseYear = response.data.release_date.slice(0, 4);
+      const releaseYear = response.data.first_air_date.slice(0, 4);
 
       for (let genreObject in genresList) {
         genresNames.push(genresList[genreObject].name);
       }
-
-      setMovieInfo({
-        title: response.data.title,
-        poster_path: `https://image.tmdb.org/t/p/original/${response.data.poster_path}`,
+      console.log(response.data);
+      setSeriesInfo({
+        name: response.data.name,
         genre: genresNames,
         releaseDate: releaseYear,
+        overview: response.data.overview,
+        poster_path: `https://image.tmdb.org/t/p/original/${response.data.poster_path}`,
       });
     });
   }
 
   useEffect(() => {
-    getMovie();
+    getSeries();
   }, []);
+
   return (
     <ScrollView style={styles.container}>
       <Image
-        source={{ uri: movieInfo.poster_path }}
+        source={{ uri: seriesInfo.poster_path }}
         style={{ width: "100%", height: 600 }}
       />
-      <Text style={styles.text}>{movieInfo.title}</Text>
+
+      <Text style={styles.text}>{seriesInfo.name}</Text>
 
       <Text style={styles.genresText}>
         {`Gênero: `}
-        {movieInfo.genre.map((item, index) => {
-          if (index == movieInfo.genre.length - 1) {
+        {seriesInfo.genre.map((item, index) => {
+          if (index == seriesInfo.genre.length - 1) {
             return item;
           } else {
             return `${item}, `;
           }
         })}
       </Text>
-      <Text>{movieInfo.releaseDate}</Text>
+      <Text style={styles.dateText}>{seriesInfo.releaseDate}</Text>
     </ScrollView>
   );
 }
@@ -87,6 +91,12 @@ const styles = StyleSheet.create({
   genresText: {
     color: "lightgrey",
     marginTop: 25,
+    textAlign: "center",
+  },
+
+  dateText: {
+    color: "lightgrey",
+    marginTop: 15,
     textAlign: "center",
   },
 });

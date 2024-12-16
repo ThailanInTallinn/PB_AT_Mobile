@@ -9,6 +9,7 @@ import Entypo from "@expo/vector-icons/Entypo";
 import SearchPage from "./src/components/searchPage/searchPage";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Details from "./src/components/details/details";
+import SeriesDetails from "./src/components/seriesDetails/seriesDetails";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -47,6 +48,7 @@ function App() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Details" component={Details} />
+        <Stack.Screen name="SeriesDetails" component={SeriesDetails} />
       </Stack.Navigator>
     );
   }
