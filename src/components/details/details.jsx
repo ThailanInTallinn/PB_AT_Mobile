@@ -64,7 +64,9 @@ export default function Details(props) {
           }
         })}
       </Text>
-      <Text>{movieInfo.releaseDate}</Text>
+      <Text style={{ color: "lightgray", textAlign: "center", marginTop: 15 }}>
+        {movieInfo.releaseDate}
+      </Text>
     </ScrollView>
   );
 }

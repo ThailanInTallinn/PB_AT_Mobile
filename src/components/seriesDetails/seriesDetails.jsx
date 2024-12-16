@@ -34,7 +34,7 @@ export default function SeriesDetails(props) {
       for (let genreObject in genresList) {
         genresNames.push(genresList[genreObject].name);
       }
-      console.log(response.data);
+
       setSeriesInfo({
         name: response.data.name,
         genre: genresNames,

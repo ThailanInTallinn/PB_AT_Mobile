@@ -46,7 +46,7 @@ function App() {
   function InternalApp() {
     return (
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="HomeInternal" component={Home} />
         <Stack.Screen name="Details" component={Details} />
         <Stack.Screen name="SeriesDetails" component={SeriesDetails} />
       </Stack.Navigator>
